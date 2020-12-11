@@ -10,9 +10,20 @@ A classe Movidesk disponibilizada cria uma interface dispensando a necessidade d
 
 Quatro funções básicas cobrindo os protocolos disponibilizados (`GET` | `POST` | `PATCH` | `DELETE`), mais funções compostas.
 
+[getPerson](#getPerson) `BASE`
+[createPerson](#createPerson) `BASE`
+[updatePerson](#updatePerson) `BASE`
+[deletePerson](#deletePerson) `BASE`
+[pushAssetsPerson](#pushAssetsPerson) `COMPOSTA`
+
 - Tickets
 
 Três funções básicas cobrindo os protocolos disponibilizados (`GET` | `POST` | `PATCH`), mais funções compostas.
+
+[getTicket](#getTicket) `BASE`
+[createTicket](#createTicket) `BASE`
+[updateTicket](#updateTicket) `BASE`
+[pushActionsTicket](#pushActionsTicket) `COMPOSTA`
 
 # Getting started
 
@@ -60,6 +71,11 @@ https://atendimento.movidesk.com/kb/article/256/movidesk-ticket-api
 ## pushActionsTicket
 
 # Changelog
+
+## 0.0.3
+
+- Alteração no retorno de erro
+- Documentação melhorada
 
 ## 0.0.2
 
