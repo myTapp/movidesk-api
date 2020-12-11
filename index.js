@@ -32,7 +32,12 @@ module.exports = class Movidesk {
 				resolve(res.data);
 			})
 			.catch(e => {
-				reject(e.response.data);
+				reject({
+					status: e.response.status,
+					statusText: e.response.statusText,
+					data: e.response.data,
+					error: true
+				});
 			})
 
 		})
@@ -61,7 +66,12 @@ module.exports = class Movidesk {
 				resolve(res.data);
 			})
 			.catch(e => {
-				reject(e.response.data);
+				reject({
+					status: e.response.status,
+					statusText: e.response.statusText,
+					data: e.response.data,
+					error: true
+				});
 			})
 
 		})
@@ -87,7 +97,12 @@ module.exports = class Movidesk {
 				resolve(res.data);
 			})
 			.catch(e => {
-				reject(e.response.data);
+				reject({
+					status: e.response.status,
+					statusText: e.response.statusText,
+					data: e.response.data,
+					error: true
+				});
 			})
 
 		})
@@ -109,7 +124,12 @@ module.exports = class Movidesk {
 				resolve(res.data);
 			})
 			.catch(e => {
-				reject(e.response.data);
+				reject({
+					status: e.response.status,
+					statusText: e.response.statusText,
+					data: e.response.data,
+					error: true
+				});
 			})
 
 		})
@@ -158,7 +178,12 @@ module.exports = class Movidesk {
 				resolve(res.data);
 			})
 			.catch(e => {
-				reject(e.response.data);
+				reject({
+					status: e.response.status,
+					statusText: e.response.statusText,
+					data: e.response.data,
+					error: true
+				});
 			})
 
 		})
@@ -194,7 +219,12 @@ module.exports = class Movidesk {
 				resolve(res.data);
 			})
 			.catch(e => {
-				reject(e.response.data);
+				reject({
+					status: e.response.status,
+					statusText: e.response.statusText,
+					data: e.response.data,
+					error: true
+				});
 			})
 
 		})
@@ -220,7 +250,12 @@ module.exports = class Movidesk {
 				resolve(res.data);
 			})
 			.catch(e => {
-				reject(e.response.data);
+				reject({
+					status: e.response.status,
+					statusText: e.response.statusText,
+					data: e.response.data,
+					error: true
+				});
 			})
 
 		})
@@ -247,7 +282,12 @@ module.exports = class Movidesk {
 				resolve(res);
 			})
 			.catch((e) => {
-				reject(e);
+				reject({
+					status: e.response.status,
+					statusText: e.response.statusText,
+					data: e.response.data,
+					error: true
+				});
 			})
 
 		})
