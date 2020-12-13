@@ -1,6 +1,6 @@
 {
   "name": "movidesk-api",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Movidesk API",
   "main": "index.js",
   "directories": {
