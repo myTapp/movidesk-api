@@ -1,5 +1,38 @@
 const axios = require('axios');
 
+let prepareError = (e, obj) => {
+	if (e.error) {
+		return e
+	} else if (e.isAxiosError && e.code) {
+		let ret = {}
+		switch (e.code) {
+			case 'ECONNABORTED':
+			case 'ETIMEDOUT':
+				ret = {
+					type: "connection",
+					error: `Connection timeout (${obj.options.timeout}ms)`
+				}
+				break;
+		}
+		return ret;
+	} else if (e.response) {
+		return {
+			type: "request",
+			error: (({ status, statusText, data }) => ({ status, statusText, data }))(e.response),
+		}
+	} else if (e.request) {
+		return {
+			type: "request",
+			error: e.request
+		}
+	} else {
+		return {
+			type: "request",
+			error: e || ""
+		}
+	}
+}
+
 module.exports = class Movidesk {
 
 	constructor(data = {}) {
@@ -32,19 +65,7 @@ module.exports = class Movidesk {
 				resolve(res.data);
 			})
 			.catch(e => {
-				reject({
-					status: e.response.status,
-					statusText: e.response.statusText,
-					data: e.response.data,
-					type: "request",
-					error: true
-				});
-			})
-			.catch(e => {
-				reject({
-					error: e,
-					type: "timeout"
-				})
+				reject(prepareError(e, this));
 			})
 
 		})
@@ -73,19 +94,7 @@ module.exports = class Movidesk {
 				resolve(res.data);
 			})
 			.catch(e => {
-				reject({
-					status: e.response.status,
-					statusText: e.response.statusText,
-					data: e.response.data,
-					type: "request",
-					error: true
-				});
-			})
-			.catch(e => {
-				reject({
-					error: e,
-					type: "timeout"
-				})
+				reject(prepareError(e, this));
 			})
 
 		})
@@ -111,19 +120,7 @@ module.exports = class Movidesk {
 				resolve(res.data);
 			})
 			.catch(e => {
-				reject({
-					status: e.response.status,
-					statusText: e.response.statusText,
-					data: e.response.data,
-					type: "request",
-					error: true
-				});
-			})
-			.catch(e => {
-				reject({
-					error: e,
-					type: "timeout"
-				})
+				reject(prepareError(e, this));
 			})
 
 		})
@@ -145,19 +142,7 @@ module.exports = class Movidesk {
 				resolve(res.data);
 			})
 			.catch(e => {
-				reject({
-					status: e.response.status,
-					statusText: e.response.statusText,
-					data: e.response.data,
-					type: "request",
-					error: true
-				});
-			})
-			.catch(e => {
-				reject({
-					error: e,
-					type: "timeout"
-				})
+				reject(prepareError(e, this));
 			})
 
 		})
@@ -183,20 +168,8 @@ module.exports = class Movidesk {
 			.then((res) => {
 				resolve(res);
 			})
-			.catch((e) => {
-				reject({
-					status: e.response.status,
-					statusText: e.response.statusText,
-					data: e.response.data,
-					type: "request",
-					error: true
-				});
-			})
 			.catch(e => {
-				reject({
-					error: e,
-					type: "timeout"
-				})
+				reject(prepareError(e, this));
 			})
 
 		})
@@ -218,19 +191,7 @@ module.exports = class Movidesk {
 				resolve(res.data);
 			})
 			.catch(e => {
-				reject({
-					status: e.response.status,
-					statusText: e.response.statusText,
-					data: e.response.data,
-					type: "request",
-					error: true
-				});
-			})
-			.catch(e => {
-				reject({
-					error: e,
-					type: "timeout"
-				})
+				reject(prepareError(e, this));
 			})
 
 		})
@@ -266,19 +227,7 @@ module.exports = class Movidesk {
 				resolve(res.data);
 			})
 			.catch(e => {
-				reject({
-					status: e.response.status,
-					statusText: e.response.statusText,
-					data: e.response.data,
-					type: "request",
-					error: true
-				});
-			})
-			.catch(e => {
-				reject({
-					error: e,
-					type: "timeout"
-				})
+				reject(prepareError(e, this));
 			})
 
 		})
@@ -304,19 +253,7 @@ module.exports = class Movidesk {
 				resolve(res.data);
 			})
 			.catch(e => {
-				reject({
-					status: e.response.status,
-					statusText: e.response.statusText,
-					data: e.response.data,
-					type: "request",
-					error: true
-				});
-			})
-			.catch(e => {
-				reject({
-					error: e,
-					type: "timeout"
-				})
+				reject(prepareError(e, this));
 			})
 
 		})
@@ -342,20 +279,8 @@ module.exports = class Movidesk {
 			.then((res) => {
 				resolve(res);
 			})
-			.catch((e) => {
-				reject({
-					status: e.response.status,
-					statusText: e.response.statusText,
-					data: e.response.data,
-					type: "request",
-					error: true
-				});
-			})
 			.catch(e => {
-				reject({
-					error: e,
-					type: "timeout"
-				})
+				reject(prepareError(e, this));
 			})
 
 		})

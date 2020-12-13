@@ -96,6 +96,11 @@ https://atendimento.movidesk.com/kb/article/256/movidesk-ticket-api
 
 # Changelog
 
+## 0.0.4
+
+- Handling de timeout
+- Documentação melhorada
+
 ## 0.0.3
 
 - Alteração no retorno de erro
