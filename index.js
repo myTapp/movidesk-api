@@ -36,8 +36,15 @@ module.exports = class Movidesk {
 					status: e.response.status,
 					statusText: e.response.statusText,
 					data: e.response.data,
+					type: "request",
 					error: true
 				});
+			})
+			.catch(e => {
+				reject({
+					error: e,
+					type: "timeout"
+				})
 			})
 
 		})
@@ -70,8 +77,15 @@ module.exports = class Movidesk {
 					status: e.response.status,
 					statusText: e.response.statusText,
 					data: e.response.data,
+					type: "request",
 					error: true
 				});
+			})
+			.catch(e => {
+				reject({
+					error: e,
+					type: "timeout"
+				})
 			})
 
 		})
@@ -101,8 +115,15 @@ module.exports = class Movidesk {
 					status: e.response.status,
 					statusText: e.response.statusText,
 					data: e.response.data,
+					type: "request",
 					error: true
 				});
+			})
+			.catch(e => {
+				reject({
+					error: e,
+					type: "timeout"
+				})
 			})
 
 		})
@@ -128,8 +149,15 @@ module.exports = class Movidesk {
 					status: e.response.status,
 					statusText: e.response.statusText,
 					data: e.response.data,
+					type: "request",
 					error: true
 				});
+			})
+			.catch(e => {
+				reject({
+					error: e,
+					type: "timeout"
+				})
 			})
 
 		})
@@ -156,7 +184,19 @@ module.exports = class Movidesk {
 				resolve(res);
 			})
 			.catch((e) => {
-				reject(e);
+				reject({
+					status: e.response.status,
+					statusText: e.response.statusText,
+					data: e.response.data,
+					type: "request",
+					error: true
+				});
+			})
+			.catch(e => {
+				reject({
+					error: e,
+					type: "timeout"
+				})
 			})
 
 		})
@@ -182,8 +222,15 @@ module.exports = class Movidesk {
 					status: e.response.status,
 					statusText: e.response.statusText,
 					data: e.response.data,
+					type: "request",
 					error: true
 				});
+			})
+			.catch(e => {
+				reject({
+					error: e,
+					type: "timeout"
+				})
 			})
 
 		})
@@ -223,8 +270,15 @@ module.exports = class Movidesk {
 					status: e.response.status,
 					statusText: e.response.statusText,
 					data: e.response.data,
+					type: "request",
 					error: true
 				});
+			})
+			.catch(e => {
+				reject({
+					error: e,
+					type: "timeout"
+				})
 			})
 
 		})
@@ -254,8 +308,15 @@ module.exports = class Movidesk {
 					status: e.response.status,
 					statusText: e.response.statusText,
 					data: e.response.data,
+					type: "request",
 					error: true
 				});
+			})
+			.catch(e => {
+				reject({
+					error: e,
+					type: "timeout"
+				})
 			})
 
 		})
@@ -286,8 +347,15 @@ module.exports = class Movidesk {
 					status: e.response.status,
 					statusText: e.response.statusText,
 					data: e.response.data,
+					type: "request",
 					error: true
 				});
+			})
+			.catch(e => {
+				reject({
+					error: e,
+					type: "timeout"
+				})
 			})
 
 		})

@@ -11,9 +11,13 @@ A classe Movidesk disponibilizada cria uma interface dispensando a necessidade d
 Quatro funções básicas cobrindo os protocolos disponibilizados (`GET` | `POST` | `PATCH` | `DELETE`), mais funções compostas.
 
 [getPerson](#getPerson) `BASE`
+
 [createPerson](#createPerson) `BASE`
+
 [updatePerson](#updatePerson) `BASE`
+
 [deletePerson](#deletePerson) `BASE`
+
 [pushAssetsPerson](#pushAssetsPerson) `COMPOSTA`
 
 - Tickets
@@ -21,8 +25,11 @@ Quatro funções básicas cobrindo os protocolos disponibilizados (`GET` | `POST
 Três funções básicas cobrindo os protocolos disponibilizados (`GET` | `POST` | `PATCH`), mais funções compostas.
 
 [getTicket](#getTicket) `BASE`
+
 [createTicket](#createTicket) `BASE`
+
 [updateTicket](#updateTicket) `BASE`
+
 [pushActionsTicket](#pushActionsTicket) `COMPOSTA`
 
 # Getting started
@@ -47,28 +54,45 @@ var movidesk = new Movidesk({
 Para a documentação completa dos parâmetros necessários, consulte a documentação:
 https://atendimento.movidesk.com/kb/article/189/movidesk-person-api
 
-## getPerson
+## getPerson `BASE`
 
-## createPerson
+Retorna informações sobre um cadastro Pessoa. um parâmetro `ID` for passado, um único objeto será retornado. Do contrário um array de objetos será retornado.
 
-## updatePerson
+A pesquisa pode utilizar um parâmetro `$filter`, que deverá utilizar uma query OData como string. 
 
-## deletePerson
+### Exemplos:
+```
+movidesk.getPerson({
+	id: 1472165153
+})
+```
 
-## pushAssetsPerson
+```
+movidesk.getPerson({
+	$filter: "personType eq 2"
+})
+```
+
+## createPerson `BASE`
+
+## updatePerson `BASE`
+
+## deletePerson `BASE`
+
+## pushAssetsPerson `COMPOSTA`
 
 # Tickets
 
 Para a documentação completa dos parâmetros necessários, consulte a documentação:
 https://atendimento.movidesk.com/kb/article/256/movidesk-ticket-api
 
-## getTicket
+## getTicket `BASE`
 
-## createTicket
+## createTicket `BASE`
 
-## updateTicket
+## updateTicket `BASE`
 
-## pushActionsTicket
+## pushActionsTicket `COMPOSTA`
 
 # Changelog
 
