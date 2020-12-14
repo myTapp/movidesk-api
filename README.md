@@ -96,6 +96,10 @@ https://atendimento.movidesk.com/kb/article/256/movidesk-ticket-api
 
 # Changelog
 
+## 0.0.8
+
+- Retorno de API
+
 ## 0.0.7
 
 - Fix de digitação

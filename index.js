@@ -37,15 +37,6 @@ let prepareError = (e, obj) => {
 	}
 }
 
-let prepareData = (data, obj) => {
-	let ret = {
-		success: true
-	}
-	if (data) {
-		ret.data = data
-	}
-}
-
 module.exports = class Movidesk {
 
 	constructor(data = {}) {
@@ -75,7 +66,7 @@ module.exports = class Movidesk {
 			
 			this.movapi.get('/persons', { params })
 			.then(res => {
-				resolve(prepareData(res.data));
+				resolve(res.data);
 			})
 			.catch(e => {
 				reject(prepareError(e, this));
@@ -104,7 +95,7 @@ module.exports = class Movidesk {
 				}
 			})
 			.then(res => {
-				resolve(prepareData(res.data));
+				resolve(res.data);
 			})
 			.catch(e => {
 				reject(prepareError(e, this));
@@ -130,7 +121,7 @@ module.exports = class Movidesk {
 				}
 			})
 			.then(res => {
-				resolve(prepareData(res.data));
+				resolve(res.data);
 			})
 			.catch(e => {
 				reject(prepareError(e, this));
@@ -152,7 +143,7 @@ module.exports = class Movidesk {
 			
 			this.movapi.delete('/persons', { params })
 			.then(res => {
-				resolve(prepareData(res.data));
+				resolve(res.data);
 			})
 			.catch(e => {
 				reject(prepareError(e, this));
@@ -201,7 +192,7 @@ module.exports = class Movidesk {
 			
 			this.movapi.get('/tickets', { params })
 			.then(res => {
-				resolve(prepareData(res.data));
+				resolve(res.data);
 			})
 			.catch(e => {
 				reject(prepareError(e, this));
@@ -237,7 +228,7 @@ module.exports = class Movidesk {
 				}
 			})
 			.then(res => {
-				resolve(prepareData(res.data));
+				resolve(res.data);
 			})
 			.catch(e => {
 				reject(prepareError(e, this));
@@ -263,7 +254,7 @@ module.exports = class Movidesk {
 				}
 			})
 			.then(res => {
-				resolve(prepareData(res.data));
+				resolve(res.data);
 			})
 			.catch(e => {
 				reject(prepareError(e, this));
