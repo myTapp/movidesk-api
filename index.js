@@ -10,6 +10,7 @@ let prepareError = (e, obj) => {
 			case 'ETIMEDOUT':
 				ret = {
 					type: "connection",
+					success: false,
 					error: `Connection timeout (${obj.options.timeout}ms)`
 				}
 				break;
@@ -18,18 +19,31 @@ let prepareError = (e, obj) => {
 	} else if (e.response) {
 		return {
 			type: "request",
+			success: false,
 			error: (({ status, statusText, data }) => ({ status, statusText, data }))(e.response),
 		}
 	} else if (e.request) {
 		return {
 			type: "request",
+			success: false,
 			error: e.request
 		}
 	} else {
 		return {
 			type: "request",
+			success: false,
 			error: e || ""
 		}
+	}
+}
+
+let prepareData = (data, obj) => {
+	let ret = {
+		success = true,
+		data = {}
+	}
+	if (data) {
+		ret.data = data
 	}
 }
 
@@ -62,7 +76,7 @@ module.exports = class Movidesk {
 			
 			this.movapi.get('/persons', { params })
 			.then(res => {
-				resolve(res.data);
+				resolve(prepareData(res.data));
 			})
 			.catch(e => {
 				reject(prepareError(e, this));
@@ -91,7 +105,7 @@ module.exports = class Movidesk {
 				}
 			})
 			.then(res => {
-				resolve(res.data);
+				resolve(prepareData(res.data));
 			})
 			.catch(e => {
 				reject(prepareError(e, this));
@@ -117,7 +131,7 @@ module.exports = class Movidesk {
 				}
 			})
 			.then(res => {
-				resolve(res.data);
+				resolve(prepareData(res.data));
 			})
 			.catch(e => {
 				reject(prepareError(e, this));
@@ -139,7 +153,7 @@ module.exports = class Movidesk {
 			
 			this.movapi.delete('/persons', { params })
 			.then(res => {
-				resolve(res.data);
+				resolve(prepareData(res.data));
 			})
 			.catch(e => {
 				reject(prepareError(e, this));
@@ -188,7 +202,7 @@ module.exports = class Movidesk {
 			
 			this.movapi.get('/tickets', { params })
 			.then(res => {
-				resolve(res.data);
+				resolve(prepareData(res.data));
 			})
 			.catch(e => {
 				reject(prepareError(e, this));
@@ -224,7 +238,7 @@ module.exports = class Movidesk {
 				}
 			})
 			.then(res => {
-				resolve(res.data);
+				resolve(prepareData(res.data));
 			})
 			.catch(e => {
 				reject(prepareError(e, this));
@@ -250,7 +264,7 @@ module.exports = class Movidesk {
 				}
 			})
 			.then(res => {
-				resolve(res.data);
+				resolve(prepareData(res.data));
 			})
 			.catch(e => {
 				reject(prepareError(e, this));
