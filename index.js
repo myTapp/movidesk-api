@@ -39,8 +39,7 @@ let prepareError = (e, obj) => {
 
 let prepareData = (data, obj) => {
 	let ret = {
-		success = true,
-		data = {}
+		success: true
 	}
 	if (data) {
 		ret.data = data
