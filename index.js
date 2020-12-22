@@ -264,31 +264,4 @@ module.exports = class Movidesk {
 
 	}
 
-	pushActionsTicket(data = {}) {
-
-		return new Promise((resolve, reject) => {
-
-			let ticket = Object.assign({}, data);
-
-			this.getTicket({
-				id: ticket.id
-			})
-			.then((res) => {
-				res.actions = res.actions.concat(ticket.actions)
-				return this.updateTicket({
-					id: res.id,
-					actions: res.actions
-				})
-			})
-			.then((res) => {
-				resolve(res);
-			})
-			.catch(e => {
-				reject(prepareError(e, this));
-			})
-
-		})
-
-	}
-
 }
