@@ -30,8 +30,6 @@ Três funções básicas cobrindo os protocolos disponibilizados (`GET` | `POST`
 
 [updateTicket](#updateTicket) `BASE`
 
-[pushActionsTicket](#pushActionsTicket) `COMPOSTA`
-
 # Getting started
 
 ## Instalação
@@ -92,9 +90,23 @@ https://atendimento.movidesk.com/kb/article/256/movidesk-ticket-api
 
 ## updateTicket `BASE`
 
-## pushActionsTicket `COMPOSTA`
-
 # Changelog
+
+## 0.0.8
+
+- Retorno de API
+
+## 0.0.7
+
+- Fix de digitação
+
+## 0.0.6
+
+- Melhor data handling
+
+## 0.0.5
+
+- Melhor detalhamento nos dados retornados
 
 ## 0.0.4
 

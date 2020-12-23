@@ -10,6 +10,7 @@ let prepareError = (e, obj) => {
 			case 'ETIMEDOUT':
 				ret = {
 					type: "connection",
+					success: false,
 					error: `Connection timeout (${obj.options.timeout}ms)`
 				}
 				break;
@@ -18,16 +19,19 @@ let prepareError = (e, obj) => {
 	} else if (e.response) {
 		return {
 			type: "request",
+			success: false,
 			error: (({ status, statusText, data }) => ({ status, statusText, data }))(e.response),
 		}
 	} else if (e.request) {
 		return {
 			type: "request",
+			success: false,
 			error: e.request
 		}
 	} else {
 		return {
 			type: "request",
+			success: false,
 			error: e || ""
 		}
 	}
@@ -251,33 +255,6 @@ module.exports = class Movidesk {
 			})
 			.then(res => {
 				resolve(res.data);
-			})
-			.catch(e => {
-				reject(prepareError(e, this));
-			})
-
-		})
-
-	}
-
-	pushActionsTicket(data = {}) {
-
-		return new Promise((resolve, reject) => {
-
-			let ticket = Object.assign({}, data);
-
-			this.getTicket({
-				id: ticket.id
-			})
-			.then((res) => {
-				res.actions = res.actions.concat(ticket.actions)
-				return this.updateTicket({
-					id: res.id,
-					actions: res.actions
-				})
-			})
-			.then((res) => {
-				resolve(res);
 			})
 			.catch(e => {
 				reject(prepareError(e, this));
