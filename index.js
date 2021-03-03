@@ -1,267 +1,264 @@
 const axios = require('axios');
 
-let prepareError = (e, obj) => {
-	if (e.error) {
-		return e
-	} else if (e.isAxiosError && e.code) {
-		let ret = {}
-		switch (e.code) {
-			case 'ECONNABORTED':
-			case 'ETIMEDOUT':
-				ret = {
-					type: "connection",
-					success: false,
-					error: `Connection timeout (${obj.options.timeout}ms)`
-				}
-				break;
-		}
-		return ret;
-	} else if (e.response) {
-		return {
-			type: "request",
-			success: false,
-			error: (({ status, statusText, data }) => ({ status, statusText, data }))(e.response),
-		}
-	} else if (e.request) {
-		return {
-			type: "request",
-			success: false,
-			error: e.request
-		}
-	} else {
-		return {
-			type: "request",
-			success: false,
-			error: e || ""
-		}
-	}
-}
+module.exports = function Movidesk(data = {}) {
 
-module.exports = class Movidesk {
+	this.options = Object.assign({}, data);
 
-	constructor(data = {}) {
-
-		this.options = Object.assign({}, data);
-
-		if ( !this.options.token ) {
-			throw new Error('Token must be passed!');
-		}
-
-		this.movapi = axios.create({
-			baseURL: this.options.base_url || "https://api.movidesk.com/public/v1",
-			timeout: this.options.timeout || 3000
-		});
-
+	if ( !this.options.token ) {
+		throw new Error('Token must be passed!');
 	}
 
-	getPerson(data = {}) {
+	this.movapi = axios.create({
+		baseURL: this.options.base_url || "https://api.movidesk.com/public/v1",
+		timeout: this.options.timeout || 3000
+	});
 
-		return new Promise((resolve, reject) => {
-			
-			let params = {
-				token: this.options.token
-			};
+	return {
 
-			Object.assign(params, data);
-			
-			this.movapi.get('/persons', { params })
-			.then(res => {
-				resolve(res.data);
-			})
-			.catch(e => {
-				reject(prepareError(e, this));
-			})
+		person: {
 
-		})
+			fetch: (data = {}) => {
 
-	}
+				return new Promise((resolve, reject) => {
+					
+					let params = {
+						token: this.options.token
+					};
 
-	createPerson(data = {}) {
+					Object.assign(params, data);
+					
+					this.movapi.get('/persons', { params })
+					.then(res => {
+						resolve(res.data);
+					})
+					.catch(e => {
+						reject(e.response.data);
+					})
 
-		return new Promise((resolve, reject) => {
-
-			let person = {
-				isActive: true,
-				personType: 1,
-				profileType: 2
-			};
-
-			Object.assign(person, data);
-			
-			this.movapi.post('/persons', person, {
-				params: {
-					token: this.options.token,
-					returnAllProperties: false
-				}
-			})
-			.then(res => {
-				resolve(res.data);
-			})
-			.catch(e => {
-				reject(prepareError(e, this));
-			})
-
-		})
-
-	}
-
-	updatePerson(data = {}) {
-
-		return new Promise((resolve, reject) => {
-
-			let person = {};
-
-			Object.assign(person, data);
-
-			this.movapi.patch('/persons', person, {
-				params: {
-					token: this.options.token,
-					returnAllProperties: false,
-					id: person.id
-				}
-			})
-			.then(res => {
-				resolve(res.data);
-			})
-			.catch(e => {
-				reject(prepareError(e, this));
-			})
-
-		})
-
-	}
-
-	deletePerson(data = {}) {
-
-		return new Promise((resolve, reject) => {
-			
-			let params = {
-				token: this.options.token
-			};
-
-			Object.assign(params, data);
-			
-			this.movapi.delete('/persons', { params })
-			.then(res => {
-				resolve(res.data);
-			})
-			.catch(e => {
-				reject(prepareError(e, this));
-			})
-
-		})
-
-	}
-
-	pushAssetsPerson(data = {}) {
-
-		return new Promise((resolve, reject) => {
-
-			let person = Object.assign({}, data);
-
-			this.getPerson({
-				id: person.id
-			})
-			.then((res) => {
-				res.atAssets = res.atAssets.concat(person.atAssets)
-				return this.updatePerson({
-					id: res.id,
-					atAssets: res.atAssets
 				})
-			})
-			.then((res) => {
-				resolve(res);
-			})
-			.catch(e => {
-				reject(prepareError(e, this));
-			})
 
-		})
+			},
 
-	}
+			create: (data = {}) => {
 
-	getTicket(data = {}) {
+				return new Promise((resolve, reject) => {
 
-		return new Promise((resolve, reject) => {
-			
-			let params = {
-				token: this.options.token
-			};
+					let person = {
+						isActive: true,
+						personType: 1,
+						profileType: 2
+					};
 
-			Object.assign(params, data);
-			
-			this.movapi.get('/tickets', { params })
-			.then(res => {
-				resolve(res.data);
-			})
-			.catch(e => {
-				reject(prepareError(e, this));
-			})
+					Object.assign(person, data);
+					
+					this.movapi.post('/persons', person, {
+						params: {
+							token: this.options.token,
+							returnAllProperties: false
+						}
+					})
+					.then(res => {
+						resolve(res.data);
+					})
+					.catch(e => {
+						reject(e.response.data);
+					})
 
-		})
+				})
 
+			},
 
-	}
+			update: (data = {}) => {
 
-	createTicket(data = {}) {
+				return new Promise((resolve, reject) => {
 
-		return new Promise((resolve, reject) => {
+					let person = {};
 
-			let ticket = {
-				type: 2,
-				subject: "Ticket",
-				justification: "",
-				actions: [
-					{
+					Object.assign(person, data);
+
+					this.movapi.patch('/persons', person, {
+						params: {
+							token: this.options.token,
+							returnAllProperties: false,
+							id: person.id
+						}
+					})
+					.then(res => {
+						resolve(res.data);
+					})
+					.catch(e => {
+						reject(e.response.data);
+					})
+
+				})
+
+			},
+
+			delete: (data = {}) => {
+
+				return new Promise((resolve, reject) => {
+					
+					let params = {
+						token: this.options.token
+					};
+
+					Object.assign(params, data);
+					
+					this.movapi.delete('/persons', { params })
+					.then(res => {
+						resolve(res.data);
+					})
+					.catch(e => {
+						reject(e.response.data);
+					})
+
+				})
+
+			},
+
+			pushAssetsPerson: (data = {}) => {
+
+				return new Promise((resolve, reject) => {
+
+					let person = Object.assign({}, data);
+
+					this.getPerson({
+						id: person.id
+					})
+					.then((res) => {
+						res.atAssets = res.atAssets.concat(person.atAssets)
+						return this.updatePerson({
+							id: res.id,
+							atAssets: res.atAssets
+						})
+					})
+					.then((res) => {
+						resolve(res);
+					})
+					.catch((e) => {
+						reject(e);
+					})
+
+				})
+
+			},
+
+		},
+
+		ticket: {
+
+			fetch: (data = {}) => {
+
+				return new Promise((resolve, reject) => {
+					
+					let params = {
+						token: this.options.token
+					};
+
+					Object.assign(params, data);
+					
+					this.movapi.get('/tickets', { params })
+					.then(res => {
+						resolve(res.data);
+					})
+					.catch(e => {
+						reject(e.response.data);
+					})
+
+				})
+
+			},
+
+			create: (data = {}) => {
+
+				return new Promise((resolve, reject) => {
+
+					let ticket = {
 						type: 2,
-						description: "Ticket automático"
-					}
-				]
-			};
+						subject: "Ticket",
+						justification: "",
+						actions: [
+							{
+								type: 2,
+								description: "Ticket automático"
+							}
+						]
+					};
 
-			Object.assign(ticket, data);
-			
-			this.movapi.post('/tickets', ticket, {
-				params: {
-					token: this.options.token,
-					returnAllProperties: false
-				}
-			})
-			.then(res => {
-				resolve(res.data);
-			})
-			.catch(e => {
-				reject(prepareError(e, this));
-			})
+					Object.assign(ticket, data);
+					
+					this.movapi.post('/tickets', ticket, {
+						params: {
+							token: this.options.token,
+							returnAllProperties: false
+						}
+					})
+					.then(res => {
+						resolve(res.data);
+					})
+					.catch(e => {
+						reject(e.response.data);
+					})
 
-		})
+				})
 
-	}
+			},
 
-	updateTicket(data = {}) {
+			update: (data = {}) => {
 
-		return new Promise((resolve, reject) => {
+				return new Promise((resolve, reject) => {
 
-			let ticket = {};
+					let ticket = {};
 
-			Object.assign(ticket, data);
+					Object.assign(ticket, data);
 
-			this.movapi.patch('/tickets', ticket, {
-				params: {
-					token: this.options.token,
-					returnAllProperties: false,
-					id: ticket.id
-				}
-			})
-			.then(res => {
-				resolve(res.data);
-			})
-			.catch(e => {
-				reject(prepareError(e, this));
-			})
+					this.movapi.patch('/tickets', ticket, {
+						params: {
+							token: this.options.token,
+							returnAllProperties: false,
+							id: ticket.id
+						}
+					})
+					.then(res => {
+						resolve(res.data);
+					})
+					.catch(e => {
+						reject(e.response.data);
+					})
 
-		})
+				})
 
-	}
+			},
+
+			pushActions: (data = {}) => {
+
+				return new Promise((resolve, reject) => {
+
+					let ticket = Object.assign({}, data);
+
+					this.getTicket({
+						id: ticket.id
+					})
+					.then((res) => {
+						res.actions = res.actions.concat(ticket.actions)
+						return this.updateTicket({
+							id: res.id,
+							actions: res.actions
+						})
+					})
+					.then((res) => {
+						resolve(res);
+					})
+					.catch((e) => {
+						reject(e);
+					})
+
+				})
+
+			},
+
+		}
+
+	} // end of methods
 
 }
