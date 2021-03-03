@@ -10,25 +10,25 @@ A classe Movidesk disponibilizada cria uma interface dispensando a necessidade d
 
 Quatro funções básicas cobrindo os protocolos disponibilizados (`GET` | `POST` | `PATCH` | `DELETE`), mais funções compostas.
 
-[getPerson](#getPerson) `BASE`
+[fetch](#fetch) `BASE`
 
-[createPerson](#createPerson) `BASE`
+[create](#create) `BASE`
 
-[updatePerson](#updatePerson) `BASE`
+[update](#update) `BASE`
 
-[deletePerson](#deletePerson) `BASE`
+[delete](#delete) `BASE`
 
-[pushAssetsPerson](#pushAssetsPerson) `COMPOSTA`
+[pushAssets](#pushAssets) `COMPOSTA`
 
 - Tickets
 
 Três funções básicas cobrindo os protocolos disponibilizados (`GET` | `POST` | `PATCH`), mais funções compostas.
 
-[getTicket](#getTicket) `BASE`
+[fetch](#fetch) `BASE`
 
-[createTicket](#createTicket) `BASE`
+[create](#create) `BASE`
 
-[updateTicket](#updateTicket) `BASE`
+[update](#update) `BASE`
 
 # Getting started
 
@@ -52,7 +52,10 @@ var movidesk = new Movidesk({
 Para a documentação completa dos parâmetros necessários, consulte a documentação:
 https://atendimento.movidesk.com/kb/article/189/movidesk-person-api
 
-## getPerson `BASE`
+Para o uso dos métodos desta api utilize chamadas como:
+`movidesk.person.fetch()`
+
+## fetch `BASE`
 
 Retorna informações sobre um cadastro Pessoa. um parâmetro `ID` for passado, um único objeto será retornado. Do contrário um array de objetos será retornado.
 
@@ -60,37 +63,56 @@ A pesquisa pode utilizar um parâmetro `$filter`, que deverá utilizar uma query
 
 ### Exemplos:
 ```
-movidesk.getPerson({
+movidesk.person.fetch({
 	id: 1472165153
 })
 ```
 
 ```
-movidesk.getPerson({
+movidesk.person.fetch({
 	$filter: "personType eq 2"
 })
 ```
 
-## createPerson `BASE`
+## create `BASE`
 
-## updatePerson `BASE`
+### Exemplos:
+```
+movidesk.person.create({
+	businessName: "Pessoa teste"
+})
+```
 
-## deletePerson `BASE`
+## update `BASE`
 
-## pushAssetsPerson `COMPOSTA`
+## delete `BASE`
+
+## pushAssets `COMPOSTA`
 
 # Tickets
 
 Para a documentação completa dos parâmetros necessários, consulte a documentação:
 https://atendimento.movidesk.com/kb/article/256/movidesk-ticket-api
 
-## getTicket `BASE`
+Para o uso dos métodos desta api utilize chamadas como:
+`movidesk.ticket.fetch()`
 
-## createTicket `BASE`
+## fetch `BASE`
 
-## updateTicket `BASE`
+## create `BASE`
+
+## update `BASE`
 
 # Changelog
+
+## 0.2.0
+
+- Breaking change: mudança nas chamadas
+- Documentação
+
+## 0.1.0
+
+- Primeira versão proposta como estável
 
 ## 0.0.8
 
