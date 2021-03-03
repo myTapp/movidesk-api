@@ -1,5 +1,42 @@
 const axios = require('axios');
 
+let prepareError = (e, obj) => {
+	if (e.error) {
+		return e
+	} else if (e.isAxiosError && e.code) {
+		let ret = {}
+		switch (e.code) {
+			case 'ECONNABORTED':
+			case 'ETIMEDOUT':
+				ret = {
+					type: "connection",
+					success: false,
+					error: `Connection timeout (${obj.options.timeout}ms)`
+				}
+				break;
+		}
+		return ret;
+	} else if (e.response) {
+		return {
+			type: "request",
+			success: false,
+			error: (({ status, statusText, data }) => ({ status, statusText, data }))(e.response),
+		}
+	} else if (e.request) {
+		return {
+			type: "request",
+			success: false,
+			error: e.request
+		}
+	} else {
+		return {
+			type: "request",
+			success: false,
+			error: e || ""
+		}
+	}
+}
+
 module.exports = function Movidesk(data = {}) {
 
 	this.options = Object.assign({}, data);
@@ -32,7 +69,7 @@ module.exports = function Movidesk(data = {}) {
 						resolve(res.data);
 					})
 					.catch(e => {
-						reject(e.response.data);
+						reject(prepareError(e, this));
 					})
 
 				})
@@ -61,7 +98,7 @@ module.exports = function Movidesk(data = {}) {
 						resolve(res.data);
 					})
 					.catch(e => {
-						reject(e.response.data);
+						reject(prepareError(e, this));
 					})
 
 				})
@@ -87,7 +124,7 @@ module.exports = function Movidesk(data = {}) {
 						resolve(res.data);
 					})
 					.catch(e => {
-						reject(e.response.data);
+						reject(prepareError(e, this));
 					})
 
 				})
@@ -109,7 +146,7 @@ module.exports = function Movidesk(data = {}) {
 						resolve(res.data);
 					})
 					.catch(e => {
-						reject(e.response.data);
+						reject(prepareError(e, this));
 					})
 
 				})
@@ -136,7 +173,7 @@ module.exports = function Movidesk(data = {}) {
 						resolve(res);
 					})
 					.catch((e) => {
-						reject(e);
+						reject(prepareError(e, this));
 					})
 
 				})
@@ -162,7 +199,7 @@ module.exports = function Movidesk(data = {}) {
 						resolve(res.data);
 					})
 					.catch(e => {
-						reject(e.response.data);
+						reject(prepareError(e, this));
 					})
 
 				})
@@ -191,13 +228,14 @@ module.exports = function Movidesk(data = {}) {
 						params: {
 							token: this.options.token,
 							returnAllProperties: false
+
 						}
 					})
 					.then(res => {
 						resolve(res.data);
 					})
 					.catch(e => {
-						reject(e.response.data);
+						reject(prepareError(e, this));
 					})
 
 				})
@@ -223,7 +261,7 @@ module.exports = function Movidesk(data = {}) {
 						resolve(res.data);
 					})
 					.catch(e => {
-						reject(e.response.data);
+						reject(prepareError(e, this));
 					})
 
 				})
@@ -250,7 +288,7 @@ module.exports = function Movidesk(data = {}) {
 						resolve(res);
 					})
 					.catch((e) => {
-						reject(e);
+						reject(prepareError(e, this));
 					})
 
 				})
