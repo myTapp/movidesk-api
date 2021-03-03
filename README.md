@@ -105,6 +105,10 @@ Para o uso dos métodos desta api utilize chamadas como:
 
 # Changelog
 
+## 0.2.1
+
+- Tratamento de erros
+
 ## 0.2.0
 
 - Breaking change: mudança nas chamadas
